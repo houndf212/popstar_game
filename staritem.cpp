@@ -15,6 +15,7 @@ void StarItem::animate_move(QPointF p, int msec)
 {
     pos_animate->stop();
     pos_animate->setDuration(msec);
+    pos_animate->setEasingCurve(QEasingCurve::InQuad);
     pos_animate->setStartValue(this->pos());
     pos_animate->setEndValue(p);
     pos_animate->start();
@@ -23,6 +24,7 @@ void StarItem::animate_move(QPointF p, int msec)
 void StarItem::animate_delete(int msec)
 {
     delete_animate->setDuration(msec);
+    pos_animate->setEasingCurve(QEasingCurve::InQuad);
     delete_animate->setStartValue(this->rect());
     delete_animate->setEndValue(QRectF(0, 0, 0, 0));
     delete_animate->start();
@@ -36,6 +38,11 @@ void StarItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
     painter->drawPolygon(getDrawPolygon());
 }
 
+void StarItem::mousePressEvent(QGraphicsSceneMouseEvent *)
+{
+    Q_EMIT clicked();
+}
+
 
 void StarItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *)
 {
@@ -44,7 +51,8 @@ void StarItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *)
 
 void StarItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *)
 {
-    Q_EMIT clicked();
+//    if (delete_animate->state() != QAbstractAnimation::Running)
+//        Q_EMIT clicked();
 }
 
 QPolygonF StarItem::getDrawPolygon() const

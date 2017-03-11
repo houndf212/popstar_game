@@ -18,7 +18,9 @@ bool MatrixSlice::isFlagged(Pos p) const
 
 bool MatrixSlice::canClick(Pos p) const
 {
-    assert(slicematrix.isInMatrix(p));
+    if (!slicematrix.isInMatrix(p))
+        return false;
+
     int group = slicematrix.get(p);
     return group > FlagVal::Alone;
 }

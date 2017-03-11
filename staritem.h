@@ -29,7 +29,7 @@ protected:
     // The mouse press event decides which item should become the mouse grabber (see QGraphicsScene::mouseGrabberItem()).
     // If you do not reimplement this function, the press event will propagate to any topmost item beneath this item,
     // and no other mouse events will be delivered to this item.
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *) override {}
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *) override;
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *) override;
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *) override;
 private:

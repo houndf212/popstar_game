@@ -1,11 +1,28 @@
 ﻿#include "matrixgame.h"
 #include "matrixslice.h"
 #include <vector>
-
+#include <algorithm>
+/*这里出现一个重大的bug，移除点的时候 必须从上到下移除
+ *  1               0
+ *  2               0
+ *  3               1
+ *  3               2
+ *    点击3 应该变为
+ * 如果先移除下面这个3, 在移除上面那个3（现在是2）
+ *  1    0    0
+ *  2 -->1 -->0
+ *  3    2    1
+ *  3    3    3
+ *  这就出错了
+ * 所以移除点的时候要从上到下一处，即是row 比较小的开始，所以先按从小到大排序
+ *  因为slice算法是seed，没有顺序，所以这里排序移除
+ * */
 int MatrixGame::removePosSet(Matrix &m, const Group &s)
 {
     assert(s.size() >= 2);
-    for (auto& p : s)
+    Group s_sort = s;
+    std::sort(s_sort.begin(), s_sort.end());
+    for (auto& p : s_sort)
     { removePos(m, p); }
     moveEmptyCol(m);
     return s.size();

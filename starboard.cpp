@@ -2,6 +2,8 @@
 #include "matrixgenerator.h"
 #include "matrixgame.h"
 #include <iostream>
+#include <string>
+#include "matrixinput.h"
 
 StarBoard::StarBoard()
 {
@@ -12,6 +14,21 @@ StarBoard::StarBoard()
 void StarBoard::gen_board()
 {
     m_matrix = MatrixGenerator::gen(5);
+    //test
+//    QString str =
+//            " 2  1  4  1  4  1  2  4  4  1 "
+//            " 4  1  3  1  3  4  3  2  1  3 "
+//            " 4  4  3  3  1  2  4  2  4  4 "
+//            " 1  2  3  3  3  2  1  2  3  4 "
+//            " 2  3  3  2  4  4  3  3  1  4 "
+//            " 3  3  1  3  4  1  1  4  1  1 "
+//            " 2  1  4  4  2  4  3  4  4  1 "
+//            " 1  1  3  2  2  3  2  3  4  4 "
+//            " 4  2  1  2  2  1  3  1  2  1 "
+//            " 2  1  2  4  1  3  4  1  4  1 "
+//            ;
+//    str = str.replace(" ", "");
+//    m_matrix = MatrixInput::fromString(str.toStdString());
     m_slice.reset(new MatrixSlice(m_matrix));
     gen_graphic_matrix();
 }
@@ -38,7 +55,7 @@ void StarBoard::gen_graphic_matrix()
             star->setPos(col*SCALE, row*SCALE);
         }
     }
-
+//    std::cout<<m_matrix<<std::endl;
 }
 
 void StarBoard::delete_group(const Group &group)
@@ -48,10 +65,12 @@ void StarBoard::delete_group(const Group &group)
         FlagVal v = m_matrix.get(p);
         Pos org = v.original_pos;
 
-        StarItem* ss = m_graphic_current_matrix.get(p);
-        ss->animate_delete(1000);
+        StarItem* star = m_graphic_current_matrix.get(p);
+        Q_ASSERT(star!=nullptr);
+        star->animate_delete(500);
+        star->set_current_pos(Pos(-1, -1));
 
-        Q_ASSERT(ss == m_graphic_original_matrix.get(org));
+        Q_ASSERT(star == m_graphic_original_matrix.get(org));
 
         m_graphic_original_matrix.set(org, nullptr);
         m_graphic_current_matrix.set(p, nullptr);
@@ -66,29 +85,35 @@ void StarBoard::move_board(const Matrix &before, const Matrix &after)
         Pos org = s.first;
         Pos p = s.second;
         StarItem* star = m_graphic_original_matrix.get(org);
-        star->animate_move(QPointF(p.col*SCALE, p.row*SCALE), 1000);
+
+        Q_ASSERT(star!=nullptr);
         star->set_current_pos(p);
         m_graphic_current_matrix.set(p, star);
+        star->animate_move(QPointF(p.col*SCALE, p.row*SCALE), 1000);
+
     }
 }
 
 void StarBoard::onStarClicked()
 {
     StarItem* star = qobject_cast<StarItem*>(sender());
+    Q_ASSERT(star!=nullptr);
     Pos p = star->current_pos();
 
-    std::cout <<"clicked: " << p <<std::endl;
+//    std::cout <<"signal clicked: " << p <<std::endl;
     Q_ASSERT(star != nullptr);
     if (!m_slice->canClick(p))
         return;
 
-    std::cout <<"clicked: " << p <<std::endl;
+//    std::cout <<"clicked: " << p <<"org: "<<star->original_pos()<<std::endl;
+
     Group group = m_slice->getGroup(p);
+
     delete_group(group);
 
     Matrix m = m_matrix;
     MatrixGame::removePosSet(m_matrix, group);
-    std::cout<<m_matrix<<std::endl;
+//    std::cout<<m_matrix<<std::endl;
 
     move_board(m, m_matrix);
 
@@ -104,7 +129,9 @@ std::vector<StarBoard::MovedPos> StarBoard::find_move_pos(const Matrix &before, 
         {
             Pos p(row, col);
             if (after.get(p).val == FlagVal::Blank)
-                continue;
+            { continue; }
+
+            Q_ASSERT(after.get(p).val!=FlagVal::Unflaged);
             Pos org_before = before.get(p).original_pos;
             Pos org_after = after.get(p).original_pos;
             if (org_before != org_after)
