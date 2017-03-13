@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     staritem.cpp \
     starboard.cpp \
     flagval.cpp \
-    matrixinput.cpp
+    matrixinput.cpp \
+    gamewindow.cpp
 
 HEADERS  += \
     graphicsview.h \
@@ -51,4 +52,5 @@ HEADERS  += \
     staritem.h \
     starboard.h \
     flagval.h \
-    matrixinput.h
+    matrixinput.h \
+    gamewindow.h

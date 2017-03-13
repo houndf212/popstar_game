@@ -12,7 +12,7 @@ class ScoreCalc
     typedef std::list<std::tuple<Pos, Matrix::value_type, int>> ClickList;
 public:
     void put(Pos p, Matrix::value_type v, int n);
-    int geScore() const;
+    int getScore() const;
     int getLeft() const;
 private:
     ClickList lst;
@@ -21,7 +21,7 @@ private:
 std::ostream& operator<<(std::ostream& os, const ScoreCalc& sc);
 inline bool operator<(const ScoreCalc& s1, const ScoreCalc& s2)
 {
-    return s1.geScore() < s2.geScore();
+    return s1.getScore() < s2.getScore();
 }
 
 #endif // SCORECALC_H

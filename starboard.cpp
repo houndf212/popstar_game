@@ -5,10 +5,22 @@
 #include <string>
 #include "matrixinput.h"
 
-StarBoard::StarBoard()
+StarBoard::StarBoard(QObject *parent)
+    :QObject(parent)
 {
-    m_scene.reset( new QGraphicsScene(0, 0, m_matrix.col_size()*SCALE, m_matrix.col_size()*SCALE) );
+    m_scene = new QGraphicsScene(0, 0, m_matrix.col_size()*SCALE, m_matrix.col_size()*SCALE, this);
+    reset();
+}
+
+void StarBoard::reset()
+{
     gen_board();
+    gen_graphic_matrix();
+    m_score = ScoreCalc();
+    Q_EMIT sig_score_changed();
+    m_slice.reset(new MatrixSlice(m_matrix));
+    if (m_slice->isOver())
+        Q_EMIT sig_over();
 }
 
 void StarBoard::gen_board()
@@ -29,12 +41,20 @@ void StarBoard::gen_board()
 //            ;
 //    str = str.replace(" ", "");
 //    m_matrix = MatrixInput::fromString(str.toStdString());
-    m_slice.reset(new MatrixSlice(m_matrix));
-    gen_graphic_matrix();
 }
 
 void StarBoard::gen_graphic_matrix()
 {
+    //first clear
+    QList<QGraphicsItem *> items = m_scene->items();
+    for (auto it : items)
+    {
+//        StarItem* star = dynamic_cast<StarItem*>(it);
+//        Q_ASSERT(star!=nullptr);
+//        star->animate_delete(500);
+        delete it;
+    }
+
     for (int row=0; row<m_matrix.row_size(); ++row)
     {
         for (int col=0; col<m_matrix.col_size(); ++col)
@@ -112,12 +132,17 @@ void StarBoard::onStarClicked()
     delete_group(group);
 
     Matrix m = m_matrix;
-    MatrixGame::removePosSet(m_matrix, group);
+    int n = MatrixGame::removePosSet(m_matrix, group);
+    m_score.put(p, m.get(p), n);
+    Q_EMIT sig_score_changed();
+
 //    std::cout<<m_matrix<<std::endl;
 
     move_board(m, m_matrix);
 
     m_slice.reset(new MatrixSlice(m_matrix));
+    if (m_slice->isOver())
+        Q_EMIT sig_over();
 }
 
 std::vector<StarBoard::MovedPos> StarBoard::find_move_pos(const Matrix &before, const Matrix &after)

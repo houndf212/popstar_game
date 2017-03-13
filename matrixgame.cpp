@@ -75,7 +75,7 @@ bool MatrixGame::isEmptyCol(const Matrix &m, int col)
 {
     for (int row=0; row<m.row_size(); ++row)
     {
-        if (m.get(Pos(row, col)).val != Flag_Blank.val)
+        if (m.get(Pos(row, col)).val != FlagVal::Blank)
             return false;
     }
     return true;

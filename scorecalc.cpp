@@ -9,7 +9,7 @@ void ScoreCalc::put(Pos p, Matrix::value_type v, int n)
     lst.push_back(std::make_tuple(p, v, n));
 }
 
-int ScoreCalc::geScore() const
+int ScoreCalc::getScore() const
 {
     int n = Matrix::row_size() * Matrix::col_size();
     int s1 = 0;
@@ -39,7 +39,7 @@ int ScoreCalc::getLeft() const
 
 ostream &operator<<(ostream &os, const ScoreCalc &sc)
 {
-    os << "score: "<<sc.geScore()
+    os << "score: "<<sc.getScore()
        <<", moves: "<<sc.lst.size()
       <<", left: "<<sc.getLeft()
       <<endl;

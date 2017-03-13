@@ -49,22 +49,24 @@
 ****************************************************************************/
 
 #include <QApplication>
-#include "starboard.h"
-#include "graphicsview.h"
+#include "gamewindow.h"
 
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
-    StarBoard b;
+//    StarBoard b;
 
-    GraphicsView window(b.get_scene());
-    window.setFrameStyle(0);
-    window.setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    window.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    window.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    window.show();
-    window.resize(600, 600);
+//    GraphicsView window(b.get_scene());
+//    window.setFrameStyle(0);
+//    window.setAlignment(Qt::AlignLeft | Qt::AlignTop);
+//    window.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    window.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    window.show();
+//    window.resize(600, 600);
+
+    GameWindow w;
+    w.show();
 
     return app.exec();
 }
