@@ -22,7 +22,7 @@ int MatrixGame::removePosSet(Matrix &m, const Group &s)
     assert(s.size() >= 2);
     Group s_sort = s;
     std::sort(s_sort.begin(), s_sort.end());
-    for (auto& p : s_sort)
+    for (auto p : s_sort)
     { removePos(m, p); }
     moveEmptyCol(m);
     return s.size();
