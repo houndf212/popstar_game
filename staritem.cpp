@@ -15,7 +15,6 @@ void StarItem::animate_move(QPointF p, int msec)
 {
     pos_animate->stop();
     pos_animate->setDuration(msec);
-    pos_animate->setEasingCurve(QEasingCurve::InQuad);
     pos_animate->setStartValue(this->pos());
     pos_animate->setEndValue(p);
     pos_animate->start();
@@ -24,7 +23,6 @@ void StarItem::animate_move(QPointF p, int msec)
 void StarItem::animate_delete(int msec)
 {
     delete_animate->setDuration(msec);
-    pos_animate->setEasingCurve(QEasingCurve::InQuad);
     delete_animate->setStartValue(this->rect());
     delete_animate->setEndValue(QRectF(0, 0, 0, 0));
     delete_animate->start();
