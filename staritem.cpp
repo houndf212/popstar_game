@@ -6,7 +6,7 @@ StarItem::StarItem(QGraphicsItem *parent)
     :QGraphicsRectItem(parent)
     ,m_color(Qt::black)
 {
-    setAcceptHoverEvents(true);
+//    setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::LeftButton);
     init_animation();
 }
