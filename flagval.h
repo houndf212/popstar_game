@@ -10,9 +10,9 @@ public:
     FlagVal() = default;
     FlagVal(int i, Pos p);
 public:
-    static const int Blank = 0;
-    static const int Alone = 1;
-    static const int Unflaged = -1;
+    static constexpr int Blank = 0;
+    static constexpr int Alone = 1;
+    static constexpr int Unflaged = -1;
 };
 
 extern const FlagVal Flag_Blank;
