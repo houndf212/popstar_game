@@ -1,4 +1,4 @@
-#include "gamewindow.h"
+﻿#include "gamewindow.h"
 
 GameWindow::GameWindow()
 {
@@ -17,7 +17,7 @@ GameWindow::GameWindow()
 
     QHBoxLayout* hlayout = new QHBoxLayout;
     hlayout->addWidget(m_score);
-    hlayout->addSpacerItem(new QSpacerItem(1,1,QSizePolicy::Expanding));
+    hlayout->addStretch();
     hlayout->addWidget(m_btn);
 
     QVBoxLayout* vlayout = new QVBoxLayout;
