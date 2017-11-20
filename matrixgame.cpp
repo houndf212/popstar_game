@@ -17,10 +17,10 @@
  * 所以移除点的时候要从上到下一处，即是row 比较小的开始，所以先按从小到大排序
  *  因为slice算法是seed，没有顺序，所以这里排序移除
  * */
-int MatrixGame::removePosSet(Matrix &m, const Group &s)
+int MatrixGame::removePosSet(Matrix &m, const PosVec &s)
 {
     assert(s.size() >= 2);
-    Group s_sort = s;
+    PosVec s_sort = s;
     std::sort(s_sort.begin(), s_sort.end());
     for (auto p : s_sort)
     { removePos(m, p); }

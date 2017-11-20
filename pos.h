@@ -5,8 +5,7 @@
 #include "basic_pos.h"
 
 typedef Basic_Pos<int> Pos;
-typedef std::vector<Pos> Group;
-typedef std::vector<Group> GroupContainer;
+typedef std::vector<Pos> PosVec;
 
 bool operator==(const Pos& p1, const Pos& p2);
 inline bool operator!=(const Pos& p1, const Pos& p2) { return !(p1==p2); }

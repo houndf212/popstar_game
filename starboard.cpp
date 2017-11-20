@@ -78,7 +78,7 @@ void StarBoard::gen_graphic_matrix()
 //    std::cout<<m_matrix<<std::endl;
 }
 
-void StarBoard::delete_group(const Group &group)
+void StarBoard::delete_group(const PosVec &group)
 {
     for(auto p : group)
     {
@@ -127,7 +127,7 @@ void StarBoard::onStarClicked()
 
 //    std::cout <<"clicked: " << p <<"org: "<<star->original_pos()<<std::endl;
 
-    Group group = m_slice->getGroup(p);
+    PosVec group = m_slice->getGroup(p);
 
     delete_group(group);
 

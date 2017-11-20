@@ -25,7 +25,7 @@ bool MatrixSlice::canClick(Pos p) const
     return group > FlagVal::Alone;
 }
 
-Group MatrixSlice::getGroup(Pos p) const
+PosVec MatrixSlice::getGroup(Pos p) const
 {
     assert(slicematrix.isInMatrix(p));
     int group = slicematrix.get(p);
@@ -50,7 +50,7 @@ void MatrixSlice::slice(const Matrix &m)
             }
             else
             {
-                 Group s;
+                 PosVec s;
                  seedPos(m, p, &s, m.get(p), groupNum);
                  if (s.size() == 1)
                  {
@@ -68,7 +68,7 @@ void MatrixSlice::slice(const Matrix &m)
     }
 }
 
-void MatrixSlice::seedPos(const Matrix &m, Pos p, Group *ps, Matrix::value_type v, int group)
+void MatrixSlice::seedPos(const Matrix &m, Pos p, PosVec *ps, Matrix::value_type v, int group)
 {
     if (m.isInMatrix(p) && !isFlagged(p) && m.get(p).val == v.val)
     {

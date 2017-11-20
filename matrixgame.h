@@ -5,7 +5,7 @@
 class MatrixGame
 {
 public:
-    static int removePosSet(Matrix& m, const Group& s);
+    static int removePosSet(Matrix& m, const PosVec& s);
 private:
     static void removePos(Matrix& m, Pos p);
     static void moveEmptyCol(Matrix& m);

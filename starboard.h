@@ -21,7 +21,7 @@ private:
     void gen_board();
     void gen_graphic_matrix();
 
-    void delete_group(const Group& group);
+    void delete_group(const PosVec& group);
     void move_board(const Matrix &before, const Matrix &after);
 private:
     Q_SLOT void onStarClicked();
